@@ -19,7 +19,6 @@ def colorir(eleva):
 
 map = folium.Map(location=[40.629902, -120.831001], tiles="Mapbox Bright")
 
-
 fg=folium.FeatureGroup(name="My Map")
 
 for lt, ln, nm, el in zip(lat, lon, nome, el):
