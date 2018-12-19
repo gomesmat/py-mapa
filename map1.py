@@ -23,7 +23,7 @@ map = folium.Map(location=[40.629902, -120.831001], tiles="Mapbox Bright")
 fg=folium.FeatureGroup(name="My Map")
 
 for lt, ln, nm, el in zip(lat, lon, nome, el):
-    fg.add_child(folium.CircleMarker(location=[lt, ln], radius=7, popup=nm + " m", fill_color=colorir(el), color='grey', fill_opacity=0.7))
+    fg.add_child(folium.CircleMarker(location=[lt, ln], radius=7, popup=nm, fill_color=colorir(el), color='grey', fill_opacity=0.7))
 map.add_child(fg)
 
 map.save("Map1.html")

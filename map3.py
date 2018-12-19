@@ -17,15 +17,26 @@ def colorir(eleva):
     else:
         return 'red'
 
-map = folium.Map(location=[40.629902, -120.831001], zoom_start=6, tiles="Mapbox Bright")
+map = folium.Map(location=[-10,20], zoom_start=2, tiles="Mapbox Bright") #40.629902, -120.831001
 
 
-fg=folium.FeatureGroup(name="My Map")
+fgv=folium.FeatureGroup(name="Vulcões")
 
 for lt, ln, nm, el in zip(lat, lon, nome, el):
-    fg.add_child(folium.CircleMarker(location=[lt, ln], radius=7, popup=nm + " m", fill_color=colorir(el), color='grey', fill_opacity=0.7))
+    fgv.add_child(folium.CircleMarker(location=[lt, ln], radius=7, popup=nm, fill_color=colorir(el), color='grey', fill_opacity=0.7))
 
-fg.add_child(folium.GeoJson(data=(open('world.json', 'r', encoding='utf-8-sig').read())))
+fgp=folium.FeatureGroup(name="População")
 
-map.add_child(fg)
+fgp.add_child(folium.GeoJson(data=open('world.json', 'r', encoding='utf-8-sig').read(),
+style_function=lambda x: {'fillColor':'green' if x['properties']['POP2005'] < 1000000
+else 'yellow' if 1000000 <= x['properties']['POP2005'] < 10000000
+else 'orange' if 10000000 <= x['properties']['POP2005'] < 100000000
+else 'orangered' if 100000000 < x['properties']['POP2005'] <= 1000000000
+else 'red'}))
+
+map.add_child(fgv)
+map.add_child(fgp)
+
+map.add_child(folium.LayerControl())
+
 map.save("Map3.html")
